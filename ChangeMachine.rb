@@ -9,13 +9,8 @@ class ChangeMachine
   end
 
   def copy
-    Dir[@source + "/*.{#{@format}}"]. each do |old_dir|
+    Dir[@source + "/*.{#{@format}}"].each do |old_dir|
       new_dir = old_dir.gsub(@source, @destination)
-      puts old_dir
-      puts new_dir
-      puts '***'
-      puts puts
-
       FileUtils.mkdir_p(File.dirname(new_dir))
       FileUtils.cp(old_dir, new_dir)
     end
@@ -27,9 +22,6 @@ class ChangeMachine
     counter = 0
     folder.each do |old_name|
       new_name = @name_pattern + counter.to_s + '.' + @format
-      puts old_name
-      puts new_name
-      puts
       File.rename(old_name, new_name)
       counter += 1
     end
@@ -38,5 +30,7 @@ class ChangeMachine
   def start
     self.copy
     self.rename
+    puts
+    puts 'DONE! New directory: ' + @destination
   end
 end
